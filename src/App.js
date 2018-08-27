@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
+import './components/Game/Game';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        };
-    }
-
     render() {
         return (
             <div className="App">
-
+                <div className="header">
+                    <h1>Boggle Game</h1>
+                </div>
+                <Game />
             </div>
         );
     }
