@@ -9,13 +9,13 @@ import Result from "../Result/Result.js";
 export default class Game extends Component {
     constructor(props) {
         super(props);
-        this.initBoard = shuffleBoard();
-        this.showResult = solveBoggle(this.initBoard);
+        this.initializeBoard = shuffleBoard();
+        this.showResult = solveBoggle(this.initializeBoard);
         this.state = {
-            board: this.initBoard,
+            board: this.initializeBoard,
             wordListInResult: this.showResult
         };
-        console.log(this.state.wordListInResult)
+        console.log("wordListInResult:" + this.state.wordListInResult)
     }
 
     render() {
