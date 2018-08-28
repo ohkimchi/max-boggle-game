@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Board from "../../Board";
 import Result from "../../Result";
+import {shuffleBoard} from "../../util/gameUtil";
 
 export default class Game extends Component {
     constructor(props) {
         super(props);
-        //to do
-        this.initBoard =
+        this.initBoard = shuffleBoard();
         this.state = {
             board: this.initBoard,
             wordListInResult: {}
