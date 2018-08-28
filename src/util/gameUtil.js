@@ -1,7 +1,6 @@
 import CellData from "../data/CellData";
 import testBoardData from './testboard';
 import dictionaryData from './dictionary';
-
 const rowN = 4;
 const colN = 4;
 
@@ -75,14 +74,13 @@ const search = (word, root) => {
     let node = root;
     for (let letter of [...word]) {
         let index = letter.charCodeAt(0) - 97;
-        if (root.children[index] === undefined) {
+        if (node.children[index] === undefined) {
             return false;
         } else {
             node = node.children[index];
         }
     }
-    let result = node.word === word;
-    return result;
+    return node.word === word;
 };
 
 const startsWith = (prefix, root) => {
@@ -98,17 +96,8 @@ const startsWith = (prefix, root) => {
     return true;
 };
 
-export const solveBoggle = (board) => {
-    const dictionaryTrie = makeDictionaryTrie(dictionaryData);
-    var rowN = board.length;
-    var colN = board[0].length;
-    var visited = new Array(4).fill(new Array(4).fill(false));
-    var results = new Set();
-
-    const dfs = (row, col, board, visited, str, node, results) => {
-        if (row < 0 || row >= rowN || col < 0 || col >= colN || visited[row][col]) {
-            return results;
-        }
+export const dfs = (row, col, board, visited, str, node, results) => {
+    if (row >= 0 && row < rowN && col >= 0 && col < colN && !visited[row][col]) {
         let letter = board[row][col].letter.toLowerCase();
         let newStr;
         if (letter.charCodeAt(0) === 42) {
@@ -130,8 +119,6 @@ export const solveBoggle = (board) => {
             }
         }
 
-
-
         visited[row][col] = true;
         var directions = [
             [1, 0],
@@ -147,17 +134,24 @@ export const solveBoggle = (board) => {
             dfs(row + dx, col + dy, board, visited, newStr, node, results);
         }
         visited[row][col] = false;
-    };
+    }
+    return results;
+};
+
+export const solveBoggle = (board) => {
+    const dictionaryTrie = makeDictionaryTrie(dictionaryData);
+    var rowN = board.length;
+    var colN = board[0].length;
+    var visited = new Array(4).fill(new Array(4).fill(false));
+    var results = new Set();
 
     //get every cell into the queue
     for (let col = 0; col < colN; col ++) {
         for (let row = 0; row < rowN; row ++) {
             //todo
-            let trieN = dictionaryTrie;
-            dfs(row, col, board, visited, "", trieN, results);
+            dfs(row, col, board, visited, "", dictionaryTrie, results);
         }
     }
-
     console.log("results: ", results);
     return results;
 };
