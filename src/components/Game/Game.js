@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import Board from "../../Board";
-import Result from "../../Result";
-import {shuffleBoard} from "../../util/gameUtil";
+import {
+    shuffleBoard,
+    dictionaryTrie,
+    solveBoggle
+} from "../../util/gameUtil";
+import Board from "../Board/Board.js";
+import Result from "../Result/Result.js";
 
 export default class Game extends Component {
     constructor(props) {
         super(props);
         this.initBoard = shuffleBoard();
+        this.showResult = solveBoggle(this.initBoard, dictionaryTrie());
         this.state = {
             board: this.initBoard,
-            wordListInResult: {}
+            wordListInResult: this.showResult
         };
+        console.log(this.state.wordListInResult)
     }
 
     render() {
@@ -23,6 +29,7 @@ export default class Game extends Component {
                 </div>
 
                 <div className="result-zone">
+                    {/*<h1>{this.state.wordListInResult}</h1>*/}
                     <Result
                         wordList = {this.state.wordListInResult}
                     />
