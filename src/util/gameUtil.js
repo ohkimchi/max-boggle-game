@@ -34,15 +34,14 @@ const board = testBoardData => {
 var TrieNode = function (parent, value) {
     this.parent = parent;
     this.children = new Array(26);
-    this.isWord = false;
     this.value = value;
+    this.word = '';
     if (parent !== undefined) {
         parent.children[value.charCodeAt(0) - 97] = this;
     }
 };
 
 const makeDictionaryTrie = dictionaryData => {
-
     const dictionaryDataArray = dictionaryData => {
         var dictionaryDataArr = [];
         dictionaryData.map((data, index) => {
@@ -52,86 +51,88 @@ const makeDictionaryTrie = dictionaryData => {
     };
 
     const dictArr = dictionaryDataArray(dictionaryData);
-
     var root = new TrieNode(undefined, '');
-    for (let i = 0, len = dictArr.length; i < len; i ++) {
-        var curNode = root;
-        let dataWord = dictArr[i];
-        for (let j = 0, lent = dataWord.length; j < lent; j ++) {
-            let letter = dataWord[j];
-            let codeOfLetter = letter.charCodeAt(0);
-            let nextNode = curNode.children[codeOfLetter - 97];
-            if (nextNode === undefined) {
-                nextNode = new TrieNode(curNode, letter);
-            }
-            curNode = nextNode;
-        }
-        curNode.isWord = true;
+    for (const vocab of dictArr) {
+        let node = root;
+        insert(vocab, node);
     }
     return root;
+};
+
+const insert = (vocab, root) => {
+    let node = root;
+    for (let letter of [...vocab]) {
+        let index = letter.charCodeAt(0) - 97;
+        if (node.children[index] === undefined) {
+            node.children[index] = new TrieNode(node, letter);
+        }
+        node = node.children[index];
+    }
+    node.word = vocab;
+};
+
+const search = (word, root) => {
+    let node = root;
+    for (let letter of [...word]) {
+        let index = letter.charCodeAt(0) - 97;
+        if (root.children[index] === undefined) {
+            return false;
+        } else {
+            node = node.children[index];
+        }
+    }
+    let result = node.word === word;
+    return result;
+};
+
+const startsWith = (prefix, root) => {
+    let node = root;
+    for (let letter of [...prefix]) {
+        let index = letter.charCodeAt(0) - 97;
+        if (node.children[index] === undefined) {
+            return false;
+        } else {
+            node = node.children[index];
+        }
+    }
+    return true;
 };
 
 export const solveBoggle = (board) => {
     const dictionaryTrie = makeDictionaryTrie(dictionaryData);
     var rowN = board.length;
     var colN = board[0].length;
-    var queue = [];
-    var results = [];
+    var visited = new Array(4).fill(new Array(4).fill(false));
+    var results = new Set();
 
-    const recursionInChildrenTrieNode = (parentNode, queue, row, col) => {
-        if (parentNode.children !== null) {
-            for (let i = 0; i < 26; i ++) {
-                if (parentNode.children[i] !== undefined) {
-                    let node1 = parentNode.children[i];
-                    queue.push([row, col, node1.value, node1, [[row, col]]]);
-                    recursionInChildrenTrieNode(node1, queue, row, row, col);
-                }
-            }
+    const dfs = (row, col, board, visited, str, node, results) => {
+        if (row < 0 || row >= rowN || col < 0 || col >= colN || visited[row][col]) {
+            return results;
         }
-        return queue;
-    };
-
-    const moveArdStarAndCheck = (parentNode, s, results, queue, row, col) => {
-        if (parentNode.children !== null) {
-            for (let i = 0; i < 26; i ++) {
-                let node2 = parentNode.children[i];
-                if (node2 !== undefined) {
-                    if (node2.isWord) {
-                        let s2 = s + node2.value;
-                        results.push(s2);
+        let letter = board[row][col].letter.toLowerCase();
+        let newStr;
+        if (letter.charCodeAt(0) === 42) {
+            for (let i = 0; i < 26; i++) {
+                letter = String.fromCharCode(97 + i);
+                newStr = str + letter;
+                if (startsWith(newStr, node)) {
+                    if (search(newStr, node)) {
+                        results.add(newStr);
                     }
-                    queue.push([row, col, node2.value, node2, [[row, col]]]);
-                    moveArdStarAndCheck(node2, s, results, queue, row, col);
+                }
+            }
+        } else {
+            newStr = str + letter;
+            if (startsWith(newStr, node)) {
+                if (search(newStr, node)) {
+                    results.add(newStr);
                 }
             }
         }
-        return queue;
-    };
 
-    //get every cell into the queue
-    for (let col = 0; col < colN; col ++) {
-        for (let row = 0; row < rowN; row ++) {
-            let cell = board[row][col].letter.toLowerCase();
-            //char code of * is 42
-            let charCodeOfCell = cell.charCodeAt(0);
-            //todo
-            if (charCodeOfCell === 42) {
-                let trieN = dictionaryTrie;
-                recursionInChildrenTrieNode(trieN, queue, row, col);
-            } else {
-                let node1 = dictionaryTrie.children[charCodeOfCell - 97];
-                if (node1 !== undefined) {
-                    queue.push([row, col, cell, node1, [[row, col]]]);
-                }
-            }
-        }
-    }
 
-    //loop through the queue
-    while (queue.length !== 0) {
-        let [row, col, s, node1, history] = queue.pop();
-        queue.pop();
-        console.log(queue[0]);
+
+        visited[row][col] = true;
         var directions = [
             [1, 0],
             [1, -1],
@@ -143,33 +144,20 @@ export const solveBoggle = (board) => {
             [-1, -1]
         ];
         for (let [dx, dy] of directions) {
-            let [x2, y2] = [row + dx, col + dy];
-            for (let his of history) {
-                if (his[0] === x2 && his[1] === y2) {
-                    continue;
-                }
-            }
-            if (x2 >= 0 && x2 < rowN && y2 >= 0 && y2 < colN) {
-                let newHist = history; //new history
-                newHist.push([x2, y2]);
-                let newLetter = board[x2][y2].letter.toLowerCase();
+            dfs(row + dx, col + dy, board, visited, newStr, node, results);
+        }
+        visited[row][col] = false;
+    };
 
-                let charCodeOfNewCell = newLetter.charCodeAt(0);
-                //todo
-                if (charCodeOfNewCell === 42) {
-                    let TrieN = dictionaryTrie;
-                    moveArdStarAndCheck(TrieN, s, results, queue, x2, y2);
-                } else {
-                    let node2 = node1.children[charCodeOfNewCell - 97];
-                    if (node2 !== undefined && node2.isWord) {
-                        let s2 = s + newLetter;
-                        results.push(s2);
-                        queue.push([x2, y2, s2, node2, newHist]);
-                    }
-                }
-            }
+    //get every cell into the queue
+    for (let col = 0; col < colN; col ++) {
+        for (let row = 0; row < rowN; row ++) {
+            //todo
+            let trieN = dictionaryTrie;
+            dfs(row, col, board, visited, "", trieN, results);
         }
     }
+
     console.log("results: ", results);
     return results;
 };

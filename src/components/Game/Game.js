@@ -15,7 +15,6 @@ export default class Game extends Component {
             board: this.initializeBoard,
             wordListInResult: this.showResult
         };
-        console.log("wordListInResult:" + this.state.wordListInResult)
     }
 
     render() {
