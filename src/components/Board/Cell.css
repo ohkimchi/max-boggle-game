@@ -11,3 +11,19 @@
     margin: auto;
     font-size: 18px;
 }
+
+input[type=text] {
+    border: none;
+    width: 3vw;
+    height: 3vw;
+    font-size: 18px;
+    text-align: center;
+}
+
+input::placeholder {
+    text-align: center;
+}
+
+input:hover {
+    background-color: lightskyblue;
+}

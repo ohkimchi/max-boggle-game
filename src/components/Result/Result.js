@@ -12,7 +12,8 @@ const Result = props => {
 
     return (
         <div className="result-box">
-            <p><h1 className="number">{wordList.size}</h1> words have been found from this boggle and existing in dictionary: </p>
+            <h1 className="number">{wordList.size}</h1>
+            <p>words have been found from this boggle and existing in dictionary: </p>
             <div className="word-list">
                 <nav>
                     <ol>{resultList}</ol>
