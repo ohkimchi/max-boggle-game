@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="adecd77a-4102-40c2-b5d8-a56045ae2349" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Result/Result.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Result/Result.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Result/WordList.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/gameUtil.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/gameUtil.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -34,20 +31,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Result.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Result.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Result/Result.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
+            <state relative-caret-position="105">
+              <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gameUtil.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="gameUtil.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/util/gameUtil.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
-              <caret line="164" column="25" lean-forward="true" selection-start-line="164" selection-start-column="25" selection-end-line="164" selection-end-column="25" />
+            <state relative-caret-position="471">
+              <caret line="164" column="19" lean-forward="true" selection-start-line="164" selection-start-column="19" selection-end-line="164" selection-end-column="19" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -162,10 +159,10 @@
         <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/util/solveBoggle.js" />
         <option value="$PROJECT_DIR$/src/util/dictionary.json" />
-        <option value="$PROJECT_DIR$/src/util/gameUtil.js" />
         <option value="$PROJECT_DIR$/src/components/Game/Game.js" />
         <option value="$PROJECT_DIR$/src/components/Result/WordList.js" />
         <option value="$PROJECT_DIR$/src/components/Result/Result.js" />
+        <option value="$PROJECT_DIR$/src/util/gameUtil.js" />
       </list>
     </option>
   </component>
@@ -192,8 +189,8 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="415" />
-    <option name="y" value="50" />
+    <option name="x" value="84" />
+    <option name="y" value="30" />
     <option name="width" value="921" />
     <option name="height" value="1061" />
   </component>
@@ -299,15 +296,15 @@
       <workItem from="1535080033357" duration="54499000" />
       <workItem from="1535468517954" duration="1425000" />
       <workItem from="1535471630226" duration="10091000" />
-      <workItem from="1535506311136" duration="6093000" />
+      <workItem from="1535506311136" duration="6852000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72108000" />
+    <option name="totallyTimeSpent" value="72867000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="589" y="288" width="921" height="1061" extended-state="0" />
+    <frame x="84" y="30" width="921" height="1061" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28474575" />
@@ -598,16 +595,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/gameUtil.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="164" column="25" lean-forward="true" selection-start-line="164" selection-start-column="25" selection-end-line="164" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Result/WordList.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -644,8 +631,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Result/Result.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
+        <state relative-caret-position="105">
+          <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/gameUtil.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="471">
+          <caret line="164" column="19" lean-forward="true" selection-start-line="164" selection-start-column="19" selection-end-line="164" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

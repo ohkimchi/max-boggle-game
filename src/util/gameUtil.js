@@ -162,6 +162,5 @@ export const solveBoggle = (board) => {
             dfs(row, col, board, visited, "", dictionaryTrie, results);
         }
     }
-    console.log(results);
     return results;
 };

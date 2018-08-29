@@ -2,15 +2,17 @@ import React from 'react';
 
 const Result = props => {
     const { wordList } = props;
-    const arr = Array.from(wordList);
-    console.log(arr);
+
+    const resultList = Array.from(wordList).map(item => {
+        return (
+            <p key={ item } className={ item }>{ item }</p>
+        )
+    });
 
     return (
         <div className="result-box">
             <div className="word-list">
-                {arr.forEach((item) => {
-                    return (<div>item</div>)
-                })}
+                {resultList}
             </div>
         </div>
     );
