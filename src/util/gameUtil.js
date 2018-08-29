@@ -96,19 +96,38 @@ const startsWith = (prefix, root) => {
     return true;
 };
 
-export const dfs = (row, col, board, visited, str, node, results) => {
+const dfs = (row, col, board, visited, str, root, results) => {
+    var directions = [
+        [1, 0],
+        [1, -1],
+        [1, 1],
+        [0, -1],
+        [0, 1],
+        [-1, 0],
+        [-1, 1],
+        [-1, -1]
+    ];
+    let node = root;
     if (row >= 0 && row < rowN && col >= 0 && col < colN && !visited[row][col]) {
         let letter = board[row][col].letter.toLowerCase();
         let newStr;
         if (letter.charCodeAt(0) === 42) {
             for (let i = 0; i < 26; i++) {
                 letter = String.fromCharCode(97 + i);
+
                 newStr = str + letter;
                 if (startsWith(newStr, node)) {
                     if (search(newStr, node)) {
+
                         results.add(newStr);
                     }
+                    visited[row][col] = true;
+                    for (let [dx, dy] of directions) {
+                        dfs(row + dx, col + dy, board, visited, newStr, node, results);
+                    }
+                    visited[row][col] = false;
                 }
+
             }
         } else {
             newStr = str + letter;
@@ -116,34 +135,25 @@ export const dfs = (row, col, board, visited, str, node, results) => {
                 if (search(newStr, node)) {
                     results.add(newStr);
                 }
+                visited[row][col] = true;
+                for (let [dx, dy] of directions) {
+                    dfs(row + dx, col + dy, board, visited, newStr, node, results);
+                }
+                visited[row][col] = false;
             }
         }
-
-        visited[row][col] = true;
-        var directions = [
-            [1, 0],
-            [1, -1],
-            [1, 1],
-            [0, -1],
-            [0, 1],
-            [-1, 0],
-            [-1, 1],
-            [-1, -1]
-        ];
-        for (let [dx, dy] of directions) {
-            dfs(row + dx, col + dy, board, visited, newStr, node, results);
-        }
-        visited[row][col] = false;
     }
-    return results;
 };
 
 export const solveBoggle = (board) => {
     const dictionaryTrie = makeDictionaryTrie(dictionaryData);
-    var rowN = board.length;
-    var colN = board[0].length;
-    var visited = new Array(4).fill(new Array(4).fill(false));
-    var results = new Set();
+    let visited = [
+        [false, false, false, false],
+        [false, false, false, false],
+        [false, false, false, false],
+        [false, false, false, false]
+    ];
+    let results = new Set();
 
     //get every cell into the queue
     for (let col = 0; col < colN; col ++) {
@@ -152,6 +162,6 @@ export const solveBoggle = (board) => {
             dfs(row, col, board, visited, "", dictionaryTrie, results);
         }
     }
-    console.log("results: ", results);
+    console.log(results);
     return results;
 };

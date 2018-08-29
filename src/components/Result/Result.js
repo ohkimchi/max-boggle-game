@@ -1,15 +1,17 @@
 import React from 'react';
-import WordList from "./WordList";
-
 
 const Result = props => {
     const { wordList } = props;
+    const arr = Array.from(wordList);
+    console.log(arr);
 
     return (
         <div className="result-box">
-            <WordList
-                wordList = {wordList}
-            />
+            <div className="word-list">
+                {arr.forEach((item) => {
+                    return (<div>item</div>)
+                })}
+            </div>
         </div>
     );
 };
