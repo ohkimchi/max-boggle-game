@@ -1,18 +1,22 @@
 import React from 'react';
+import './Result.css';
 
 const Result = props => {
     const { wordList } = props;
 
-    const resultList = Array.from(wordList).map(item => {
+    const resultList = Array.from(wordList).sort().map(item => {
         return (
-            <p key={ item } className={ item }>{ item }</p>
+            <li key={ item } className="Item">{ item }</li>
         )
     });
 
     return (
         <div className="result-box">
+            <p><h1 className="number">{wordList.size}</h1> words have been found from this boggle and existing in dictionary: </p>
             <div className="word-list">
-                {resultList}
+                <nav>
+                    <ol>{resultList}</ol>
+                </nav>
             </div>
         </div>
     );

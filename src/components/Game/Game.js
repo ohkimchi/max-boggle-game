@@ -27,7 +27,6 @@ export default class Game extends Component {
                 </div>
 
                 <div className="result-zone">
-                    <h6>The words in the dictionary are: </h6>
                     <Result
                         wordList = {this.state.wordListInResult}
                     />
