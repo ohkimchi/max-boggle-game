@@ -1,12 +1,15 @@
 import React from 'react';
+import "./Cell.css";
 
 const Cell = props => {
     const { letter } = props;
 
     return (
-        <button className= 'cell'>
-            {letter}
-        </button>
+        <div className = 'cell'>
+            <div className = 'letter' >
+                {letter}
+            </div>
+        </div>
     );
 };
 

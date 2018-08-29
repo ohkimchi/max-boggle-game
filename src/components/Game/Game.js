@@ -5,6 +5,7 @@ import {
 } from "../../util/gameUtil";
 import Board from "../Board/Board.js";
 import Result from "../Result/Result.js";
+import "./Game.css"
 
 export default class Game extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ export default class Game extends Component {
 
     render() {
         return (
-            <div>
+            <div className="game-and-result">
                 <div className="game-zone">
                     <Board
                         board = {this.state.board}

@@ -1,0 +1,13 @@
+.cell {
+    height: 10vw;
+    width: 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid lightskyblue;
+}
+
+.cell > .letter {
+    margin: auto;
+    font-size: 18px;
+}

@@ -1,0 +1,7 @@
+.board {
+    display: flex;
+    align-self: center;
+}
+.row {
+    float: left;
+}
