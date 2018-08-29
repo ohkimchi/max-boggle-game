@@ -12,7 +12,6 @@ export default class Board extends Component {
     }
 
     onChangeCell(newCell) {
-        console.log(newCell.rowId, newCell.columnId)
         let newBoard = update(this.state.board, {
             [newCell.rowId]: {
                 [newCell.columnId]: {$set: newCell}
@@ -21,7 +20,7 @@ export default class Board extends Component {
         this.setState({
             board: newBoard
         });
-        console.log(this.state.board[0][0])
+        console.log(this.state.board[0][0].letter)
     }
 
     changeBoard() {
@@ -38,7 +37,7 @@ export default class Board extends Component {
                                 {row.map((cell) => {
                                     return (
                                         <Cell cell={cell}
-                                              key= {cell.rowId.toString()+cell.columnId.toString()}
+                                              key= {"cell-"+cell.rowId.toString()+cell.columnId.toString()}
                                               updateBoard={this.onChangeCell.bind(this)}
                                         />
                                     );

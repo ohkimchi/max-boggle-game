@@ -18,15 +18,12 @@ class Cell extends Component {
     }
 
     updateCell(e) {
-        this.setState({
-            letter: e.target.value
-        });
-        const newCell = new CellData(this.state.letter, this.state.rowId, this.state.columnId);
+        const newCell = new CellData(e.target.value, this.state.rowId, this.state.columnId);
+        this.helpChangeBoard(newCell);
         this.setState({
             cell: newCell,
+            letter: e.target.value
         });
-        console.log("newCell in Cell should change: ", this.state.cell)
-        this.helpChangeBoard(this.state.cell)
     }
 
     render() {
