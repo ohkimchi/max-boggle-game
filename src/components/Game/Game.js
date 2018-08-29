@@ -5,6 +5,7 @@ import {
 } from "../../util/gameUtil";
 import Board from "../Board/Board.js";
 import Result from "../Result/Result.js";
+import update from "immutability-helper";
 import "./Game.css"
 
 export default class Game extends Component {
@@ -19,32 +20,33 @@ export default class Game extends Component {
         };
     }
 
-    onChangeBoard(newBoard) {
-        this.setState({
-            board: newBoard
+    onChangeCell(newCell) {
+        let newBoard = update(this.state.board, {
+            [newCell.rowId]: {
+                [newCell.columnId]: {$set: newCell}
+            }
         });
-        console.log(this.state.board[0][0])
-
-    }
-
-    onChangeResult(newResult) {
+        const newResult = solveBoggle(newBoard);
         this.setState({
-            wordListInResult: this.newResult
-        })
+            board: newBoard,
+            wordListInResult: newResult
+        });
     }
 
     render() {
+        console.log(this.state.wordListInResult)
+
         return (
             <div className="game-and-result">
                 <div className="game-zone">
                     <Board board = {this.state.board}
-                           changeBoard = {this.onChangeBoard.bind(this)}/>
+                           cellChange = {this.onChangeCell.bind(this)}
+                    />
                 </div>
 
                 <div className="result-zone">
                     <Result
                         wordList = {this.state.wordListInResult}
-                        changeResult = {this.onChangeResult.bind(this)}
                     />
                 </div>
             </div>
