@@ -16,7 +16,7 @@ const Result = props => {
             <p>words have been found from this boggle and existing in dictionary: </p>
             <div className="word-list">
                 <nav>
-                    <ol>{resultList}</ol>
+                    <ol id = "result-list">{resultList}</ol>
                 </nav>
             </div>
         </div>

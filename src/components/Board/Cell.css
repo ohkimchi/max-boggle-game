@@ -1,6 +1,6 @@
 .cell {
-    height: 10vw;
-    width: 10vw;
+    height: 4vw;
+    width: 4vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,7 +16,7 @@ input[type=text] {
     border: none;
     width: 3vw;
     height: 3vw;
-    font-size: 18px;
+    font-size: 25px;
     text-align: center;
 }
 

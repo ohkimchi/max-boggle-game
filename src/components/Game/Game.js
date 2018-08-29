@@ -49,6 +49,10 @@ export default class Game extends Component {
                         wordList = {this.state.wordListInResult}
                     />
                 </div>
+
+                <div className="search-zone">
+
+                </div>
             </div>
         );
     }
