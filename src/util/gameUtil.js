@@ -164,3 +164,8 @@ export const solveBoggle = (board) => {
     }
     return results;
 };
+
+export const filter = (results, filterWord) => {
+    const filteredResult = new Set([...results].filter(res => res.includes(filterWord)));
+    return filteredResult;
+};

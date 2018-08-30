@@ -15,6 +15,7 @@ class Cell extends Component {
             <div className = 'cell'>
                 <div className = 'letter' >
                     <input type="text"
+                           className="cell-input"
                            value={this.props.cell.letter}
                            onChange={(e) => this.updateCell(e)}
                     />

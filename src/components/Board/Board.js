@@ -4,7 +4,6 @@ import './Board.css';
 
 export default class Board extends Component {
     render() {
-        console.log("board in Board: ", this.props)
         return (
             <div className="container">
                 <div className="board">
@@ -26,5 +25,4 @@ export default class Board extends Component {
             </div>
         );
     }
-
 }
