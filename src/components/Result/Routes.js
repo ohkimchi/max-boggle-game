@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Board from "../Board/Board";
+import "./Route.css";
 
 export default class Routes extends Component {
 
@@ -10,13 +11,17 @@ export default class Routes extends Component {
                 <div className="allRoutes">
                     {targetRoutes.map((route, i) => {
                         return(
-                            <div key={"route-" + i}>
-                                <p>Route {i+1}</p>
-                                <Board key={"board-" + i}
-                                       board={this.props.board}
-                                       targetR={route}
-                                       forKey={i}
-                                />
+                            <div className="indiRoute"
+                                 key={"route-" + i}>
+                                <div className="route-title">
+                                    <p>Route {i+1}</p>
+                                </div>
+                                <div className="route-details">
+                                    <Board key={"board-" + i}
+                                           board={this.props.board}
+                                           targetR={route}
+                                           forKey={i}/>
+                                </div>
                             </div>
                         );
                     })}
