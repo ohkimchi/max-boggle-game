@@ -3,7 +3,6 @@ import './Result.css';
 
 const Result = props => {
     const { wordList } = props;
-    console.log("wordList: ", wordList)
 
     const resultList = Array.from(wordList).sort().map(item => {
         return (

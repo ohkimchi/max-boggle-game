@@ -38,7 +38,9 @@ export default class Game extends Component {
     }
 
     //when user inputs in the search filter
-    onChangeFilter(newResult, newInput) {
+    onChangeFilter(newInput) {
+        const result = solveBoggle(this.state.board);
+        const newResult = filter(result, newInput);
         this.setState({
             wordListInResult: newResult,
             inputVal: newInput
@@ -64,7 +66,7 @@ export default class Game extends Component {
                     <Filter
                         inputValue = {this.state.inputVal}
                         filteredList = {this.state.wordListInResult}
-                        inputChange = {(newResult, newInput) => this.onChangeFilter(newResult, newInput)}
+                        inputChange = {(newInput) => this.onChangeFilter(newInput)}
                     />
                 </div>
             </div>
