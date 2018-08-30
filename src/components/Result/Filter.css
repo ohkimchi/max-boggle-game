@@ -41,7 +41,7 @@
     background: rgba(34,50,84,0.03);
 }
 .inp input:not(:placeholder-shown) + span {
-    color: #5a667f;
+    color: deepskyblue;
     transform: translateY(-40px) scale(0.75);
 }
 .inp input:focus {

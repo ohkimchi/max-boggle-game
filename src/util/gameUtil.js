@@ -96,7 +96,52 @@ const startsWith = (prefix, root) => {
     return true;
 };
 
-const dfs = (row, col, board, visited, str, root, results) => {
+const getVisitedCells = (board, visited, curRow, curCol) => {
+    let hist = [];
+    let rowN = visited.length;
+    let colN = visited[0].length;
+    for (let row = 0; row < rowN; row ++) {
+        for (let col = 0; col < colN; col ++) {
+            if (visited[row][col]) {
+                hist.push([board[row][col].letter, row, col]);
+            }
+        }
+    }
+    hist.push([board[curRow][curCol].letter, curRow, curCol]);
+    return hist;
+};
+
+const whenWordInDict = (newStr, results, board, visited, row, col, history) => {
+    results.add(newStr);
+    let visitedCells = getVisitedCells(board, visited, row, col);
+    let route = {};
+    route[newStr] = visitedCells;
+    history.push(route);
+};
+
+//combine routes of each word into an array
+const combineRoutes = (history, results) => {
+    let routeList = [];
+    for (let word of results) {
+        let routeObj = {};
+        const routesForEachWord = history.filter(hist => Object.keys(hist)[0] === word).map(arr => Object.values(arr));
+        routeObj[word] = routesForEachWord;
+        routeList.push(routeObj);
+    }
+    return routeList;
+};
+
+export const searchRouteForWord = (word, routeList) => {
+    let arr = routeList.filter(r => Object.keys(r)[0] === word)[0];
+    if (arr !== undefined) {
+        let routes = Object.values(arr)[0];
+        return routes;
+    } else {
+        return null;
+    }
+};
+
+const dfs = (row, col, board, visited, str, root, results, history) => {
     var directions = [
         [1, 0],
         [1, -1],
@@ -109,7 +154,7 @@ const dfs = (row, col, board, visited, str, root, results) => {
     ];
     let node = root;
     if (row >= 0 && row < rowN && col >= 0 && col < colN && !visited[row][col]) {
-        let letter = board[row][col].letter.toLowerCase();
+        let letter = board[row][col].letter;
         let newStr;
         if (letter.charCodeAt(0) === 42) {
             for (let i = 0; i < 26; i++) {
@@ -118,12 +163,11 @@ const dfs = (row, col, board, visited, str, root, results) => {
                 newStr = str + letter;
                 if (startsWith(newStr, node)) {
                     if (search(newStr, node)) {
-
-                        results.add(newStr);
+                        whenWordInDict(newStr, results, board, visited, row, col, history);
                     }
                     visited[row][col] = true;
                     for (let [dx, dy] of directions) {
-                        dfs(row + dx, col + dy, board, visited, newStr, node, results);
+                        dfs(row + dx, col + dy, board, visited, newStr, node, results, history);
                     }
                     visited[row][col] = false;
                 }
@@ -133,11 +177,11 @@ const dfs = (row, col, board, visited, str, root, results) => {
             newStr = str + letter;
             if (startsWith(newStr, node)) {
                 if (search(newStr, node)) {
-                    results.add(newStr);
+                    whenWordInDict(newStr, results, board, visited, row, col, history);
                 }
                 visited[row][col] = true;
                 for (let [dx, dy] of directions) {
-                    dfs(row + dx, col + dy, board, visited, newStr, node, results);
+                    dfs(row + dx, col + dy, board, visited, newStr, node, results, history);
                 }
                 visited[row][col] = false;
             }
@@ -154,15 +198,17 @@ export const solveBoggle = (board) => {
         [false, false, false, false]
     ];
     let results = new Set();
+    let history = [];
 
     //get every cell into the queue
     for (let col = 0; col < colN; col ++) {
         for (let row = 0; row < rowN; row ++) {
             //todo
-            dfs(row, col, board, visited, "", dictionaryTrie, results);
+            dfs(row, col, board, visited, "", dictionaryTrie, results, history);
         }
     }
-    return results;
+    let finalHis = combineRoutes(history, results);
+    return [results, finalHis];
 };
 
 export const filter = (results, filterWord) => {

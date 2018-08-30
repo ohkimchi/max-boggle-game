@@ -1,12 +1,16 @@
 import React from 'react';
 import './Result.css';
+import {searchRouteForWord} from "../../util/gameUtil";
 
 const Result = props => {
     const { wordList } = props;
 
     const resultList = Array.from(wordList).sort().map(item => {
+        let numb = searchRouteForWord(item, props.routes).length;
         return (
-            <li key={ item } className="Item">{ item }</li>
+            <li key={ item } className="Item">{ item }<span>&nbsp;</span>
+                <span className="num">{ numb }</span>
+            </li>
         )
     });
 

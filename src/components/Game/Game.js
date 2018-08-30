@@ -2,23 +2,28 @@ import React, { Component } from 'react';
 import {
     shuffleBoard,
     solveBoggle,
-    filter
+    filter,
+    searchRouteForWord,
 } from "../../util/gameUtil";
 import Board from "../Board/Board";
 import Result from "../Result/Result";
 import Filter from "../Result/Filter";
 import update from "immutability-helper";
 import "./Game.css"
+import Routes from "../Result/Routes";
 
 export default class Game extends Component {
     constructor() {
         super();
         this.initializeBoard = shuffleBoard();
-        this.showResult = solveBoggle(this.initializeBoard);
+        this.showResult = solveBoggle(this.initializeBoard)[0];
+        this.getRoutes = solveBoggle(this.initializeBoard)[1];
         this.state = {
             board: this.initializeBoard,
             wordListInResult: this.showResult,
-            inputVal: ""
+            inputVal: "",
+            routes: this.getRoutes,
+            selectedRoutes: []
         };
     }
 
@@ -29,7 +34,7 @@ export default class Game extends Component {
                 [newCell.columnId]: {$set: newCell}
             }
         });
-        const newResult = solveBoggle(newBoard);
+        const newResult = solveBoggle(newBoard)[0];
         const filteredResult = filter(newResult, this.state.inputVal);
         this.setState({
             board: newBoard,
@@ -39,7 +44,7 @@ export default class Game extends Component {
 
     //when user inputs in the search filter
     onChangeFilter(newInput) {
-        const result = solveBoggle(this.state.board);
+        const result = solveBoggle(this.state.board)[0];
         const newResult = filter(result, newInput);
         this.setState({
             wordListInResult: newResult,
@@ -47,18 +52,28 @@ export default class Game extends Component {
         });
     }
 
+    displayRoutes(word) {
+        let routes = searchRouteForWord(word, this.state.routes);
+        if (routes !== undefined) {
+            this.setState({
+                selectedRoutes: routes
+            });
+        }
+    }
+
     render() {
         return (
             <div className="big-container">
                 <div className="game-zone">
-                    <Board board = {this.state.board}
-                           cellChange = {(newCell) => this.onChangeCell(newCell)}
+                    <Board board={this.state.board}
+                           cellChange={(newCell) => this.onChangeCell(newCell)}
                     />
                 </div>
 
                 <div className="result-zone">
                     <Result
                         wordList = {this.state.wordListInResult}
+                        routes = {this.state.routes}
                     />
                 </div>
 
@@ -67,6 +82,14 @@ export default class Game extends Component {
                         inputValue = {this.state.inputVal}
                         filteredList = {this.state.wordListInResult}
                         inputChange = {(newInput) => this.onChangeFilter(newInput)}
+                        displayR={(word) => this.displayRoutes(word)}
+                    />
+                </div>
+
+                <div className="routes-zone">
+                    <Routes
+                        targetRoutes={this.state.selectedRoutes}
+                        board={this.state.board}
                     />
                 </div>
             </div>
