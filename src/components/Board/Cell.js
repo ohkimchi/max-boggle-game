@@ -11,17 +11,29 @@ class Cell extends Component {
     }
 
     render() {
-        return(
-            <div className = 'cell'>
-                <div className = 'letter' >
-                    <input type="text"
-                           className="cell-input"
-                           value={this.props.cell.letter}
-                           onChange={(e) => this.updateCell(e)}
-                    />
+        const { forClassName } = this.props;
+        if (forClassName !== undefined) {
+            return(
+                <div className = 'cell shouldColor' >
+                    <div className = 'letter' >
+                        <p>{this.props.cell.letter}</p>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return(
+                <div className = 'cell'>
+                    <div className = 'letter' >
+                        <input type="text"
+                               className="cell-input"
+                               value={this.props.cell.letter}
+                               onChange={(e) => this.updateCell(e)}
+                        />
+                    </div>
+                </div>
+            );
+        }
+
     }
 };
 

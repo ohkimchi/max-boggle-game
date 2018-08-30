@@ -5,17 +5,24 @@
     export default class Board extends Component {
 
         renderBoard = () => {
-            const { board, targetR } = this.props;
-            const renderRow = this.renderRow;
+            const { board, targetR, forKey } = this.props;
+            const checkExist = this.checkExist;
+            const renderCell = this.renderCell;
             const rowsView = [];
             board.map((row, index) => {
                 const rowView = [];
+                let exist = false;
                 row.map((cell, jndex) => {
-                    rowView.push(renderRow(targetR, index, jndex, cell))
+                    exist = checkExist(targetR, index, jndex);
+                    if (exist) {
+                        console.log(index, jndex);
+                    }
+                    rowView.push(renderCell(exist, cell));
                     return rowView;
                 });
+
                 rowsView.push(
-                    <div className="row" key={"row-" + index}>
+                    <div className="row" key={"row-" + forKey + index}>
                         {rowView}
                     </div>
                 );
@@ -28,25 +35,26 @@
             )
         };
 
-        renderRow = (arr, index, jndex, cell) => {
-            const renderCell = this.renderCell;
-            const cells = [];
-            arr.map((item) => {
-                return (item[1] === index && item[2] === jndex) ? cells.push(renderCell(true, cell)) : cells.push((renderCell(false, cell)))
+        checkExist = (arr, index, jndex) => {
+            let exist = false;
+            arr[0].map((item) => {
+                return (item[1] === index && item[2] === jndex) ? exist = true : null;
             });
-            return cells;
+            return exist;
         };
 
         renderCell = (exist, cell) => {
+            const { forKey } = this.props;
+            const forClass = "shouldColor";
             return (
                 <div>
                     { exist ? (
                         <Cell cell={cell}
-                              className="shouldColor"
-                              key= {"cell-"+cell.rowId.toString()+cell.columnId.toString()}
+                              forClassName={forClass}
+                              key= {"cell-"+ forKey + cell.rowId.toString() + cell.columnId.toString()}
                         /> ) : (
                         <Cell cell={cell}
-                              key= {"cell-"+cell.rowId.toString()+cell.columnId.toString()}
+                              key= {"cell-"+ forKey + cell.rowId.toString() + cell.columnId.toString()}
                         />
                     )}
                 </div>

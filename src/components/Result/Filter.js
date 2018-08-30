@@ -4,7 +4,7 @@ import './Filter.css';
 export default class Filter extends Component {
 
     onChangeInput(e) {
-        const userInput = e.target.value;
+        const userInput = e.target.value.toLowerCase();
         this.props.inputChange(userInput);
         this.props.displayR(userInput);
 

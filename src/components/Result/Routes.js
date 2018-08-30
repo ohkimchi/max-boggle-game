@@ -4,13 +4,20 @@ import Board from "../Board/Board";
 export default class Routes extends Component {
 
     render() {
-        if (this.props.targetRoutes !== [] && this.props.targetRoutes !== null) {
+        const { targetRoutes } = this.props;
+        if (targetRoutes !== [] && targetRoutes !== null) {
             return(
                 <div className="allRoutes">
-                    {this.props.targetRoutes.map((route, i) => {
+                    {targetRoutes.map((route, i) => {
                         return(
-                            <Board key={i} board={this.props.board}
-                                   targetR={route}/>
+                            <div key={"route-" + i}>
+                                <p>Route {i+1}</p>
+                                <Board key={"board-" + i}
+                                       board={this.props.board}
+                                       targetR={route}
+                                       forKey={i}
+                                />
+                            </div>
                         );
                     })}
                 </div>
