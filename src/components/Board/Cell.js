@@ -4,19 +4,20 @@ import CellData from "../../data/CellData";
 
 class Cell extends Component {
 
+    //handle input change
     updateCell(e) {
-        const {cell} = this.props;
+        const {cell, changeBoardFromCell} = this.props;
         const newCell = new CellData(e.target.value, cell.rowId, cell.columnId);
-        this.props.changeBoardFromCell(newCell);
+        changeBoardFromCell(newCell);
     }
 
     render() {
-        const { forClassName } = this.props;
+        const {forClassName, cell } = this.props;
         if (forClassName !== undefined) {
             return(
                 <div className = 'cell shouldColor' >
                     <div className = 'letter' >
-                        <p>{this.props.cell.letter}</p>
+                        <p>{cell.letter}</p>
                     </div>
                 </div>
             );
@@ -26,7 +27,7 @@ class Cell extends Component {
                     <div className = 'letter' >
                         <input type="text"
                                className="cell-input"
-                               value={this.props.cell.letter}
+                               value={cell.letter}
                                onChange={(e) => this.updateCell(e)}
                         />
                     </div>
@@ -35,6 +36,6 @@ class Cell extends Component {
         }
 
     }
-};
+}
 
 export default Cell;

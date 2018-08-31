@@ -3,10 +3,11 @@ import './Result.css';
 import {searchRouteForWord} from "../../util/gameUtil";
 
 const Result = props => {
-    const { wordList } = props;
+    const {wordList, routes} = props;
 
+    //display the list of words with tag showing the number of possible routes
     const resultList = Array.from(wordList).sort().map(item => {
-        let numb = searchRouteForWord(item, props.routes).length;
+        let numb = searchRouteForWord(item, routes).length;
         return (
             <li key={ item } className="Item">{ item }<span>&nbsp;</span>
                 <span className="num">{ numb }</span>

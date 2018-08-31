@@ -4,10 +4,12 @@ import dictionaryData from './dictionary';
 const rowN = 4;
 const colN = 4;
 
+//init board with data from json
 export const shuffleBoard = () => {
     return board(testBoardData);
 };
 
+//get board with Cell type populated
 const board = testBoardData => {
     const board = [
         ['', '', '', ''],
@@ -30,6 +32,7 @@ const board = testBoardData => {
     return board;
 };
 
+//define the Trie structure
 var TrieNode = function (parent, value) {
     this.parent = parent;
     this.children = new Array(26);
@@ -40,6 +43,7 @@ var TrieNode = function (parent, value) {
     }
 };
 
+//get dictionary in Trie struction dictionary.json
 const makeDictionaryTrie = dictionaryData => {
     const dictionaryDataArray = dictionaryData => {
         var dictionaryDataArr = [];
@@ -58,6 +62,7 @@ const makeDictionaryTrie = dictionaryData => {
     return root;
 };
 
+//insert each word into the Trie
 const insert = (vocab, root) => {
     let node = root;
     for (let letter of [...vocab]) {
@@ -70,6 +75,7 @@ const insert = (vocab, root) => {
     node.word = vocab;
 };
 
+//search if a word exists in a Trie
 const search = (word, root) => {
     let node = root;
     for (let letter of [...word]) {
@@ -83,6 +89,11 @@ const search = (word, root) => {
     return node.word === word;
 };
 
+/**
+ * check in the Trie if a prefix exists
+ * difference from search is the return:
+ * search func sets the last node with word
+ */
 const startsWith = (prefix, root) => {
     let node = root;
     for (let letter of [...prefix]) {
@@ -96,6 +107,7 @@ const startsWith = (prefix, root) => {
     return true;
 };
 
+//get cells which were visited
 const getVisitedCells = (board, visited, curRow, curCol) => {
     let hist = [];
     let rowN = visited.length;
@@ -111,6 +123,7 @@ const getVisitedCells = (board, visited, curRow, curCol) => {
     return hist;
 };
 
+//git all the routes of any word existing in dictionary
 const whenWordInDict = (newStr, results, board, visited, row, col, history) => {
     results.add(newStr);
     let visitedCells = getVisitedCells(board, visited, row, col);
@@ -119,7 +132,7 @@ const whenWordInDict = (newStr, results, board, visited, row, col, history) => {
     history.push(route);
 };
 
-//combine routes of each word into an array
+//combine routes of each word into an array & return summarized routes
 const combineRoutes = (history, results) => {
     let routeList = [];
     for (let word of results) {
@@ -131,6 +144,7 @@ const combineRoutes = (history, results) => {
     return routeList;
 };
 
+//get all the routes of specific word
 export const searchRouteForWord = (word, routeList) => {
     let arr = routeList.filter(r => Object.keys(r)[0] === word)[0];
     if (arr !== undefined) {
@@ -141,6 +155,7 @@ export const searchRouteForWord = (word, routeList) => {
     }
 };
 
+//dfs to get the results and the history (later becomes routes info)
 const dfs = (row, col, board, visited, str, root, results, history) => {
     var directions = [
         [1, 0],
@@ -189,6 +204,7 @@ const dfs = (row, col, board, visited, str, root, results, history) => {
     }
 };
 
+//get words list and routes info
 export const solveBoggle = (board) => {
     const dictionaryTrie = makeDictionaryTrie(dictionaryData);
     let visited = [
@@ -211,6 +227,7 @@ export const solveBoggle = (board) => {
     return [results, finalHis];
 };
 
+//filter the results depending on what user inputs
 export const filter = (results, filterWord) => {
     const filteredResult = new Set([...results].filter(res => res.includes(filterWord)));
     return filteredResult;

@@ -5,7 +5,7 @@ import "./Route.css";
 export default class Routes extends Component {
 
     render() {
-        const { targetRoutes } = this.props;
+        const {targetRoutes, board} = this.props;
         if (targetRoutes !== [] && targetRoutes !== null) {
             return(
                 <div className="allRoutes">
@@ -18,7 +18,7 @@ export default class Routes extends Component {
                                 </div>
                                 <div className="route-details">
                                     <Board key={"board-" + i}
-                                           board={this.props.board}
+                                           board={board}
                                            targetR={route}
                                            forKey={i}/>
                                 </div>

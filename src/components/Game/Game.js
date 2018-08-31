@@ -36,9 +36,11 @@ export default class Game extends Component {
         });
         const newResult = solveBoggle(newBoard)[0];
         const filteredResult = filter(newResult, this.state.inputVal);
+        const newRoutes = solveBoggle(newBoard)[1];
         this.setState({
             board: newBoard,
-            wordListInResult: filteredResult
+            wordListInResult: filteredResult,
+            routes: newRoutes
         });
     }
 
@@ -52,6 +54,7 @@ export default class Game extends Component {
         });
     }
 
+    //to get all the routes for each word
     displayRoutes(word) {
         let routes = searchRouteForWord(word, this.state.routes);
         if (routes !== undefined) {
