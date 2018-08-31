@@ -7,7 +7,8 @@ class Cell extends Component {
     //handle input change
     updateCell(e) {
         const {cell, changeBoardFromCell} = this.props;
-        const newCell = new CellData(e.target.value, cell.rowId, cell.columnId);
+        const userInput = e.target.value;
+        const newCell = new CellData(userInput, cell.rowId, cell.columnId);
         changeBoardFromCell(newCell);
     }
 
