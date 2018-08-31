@@ -14,9 +14,6 @@
                 let exist = false;
                 row.map((cell, jndex) => {
                     exist = checkExist(targetR, index, jndex);
-                    if (exist) {
-                        console.log(index, jndex);
-                    }
                     rowView.push(renderCell(exist, cell));
                     return rowView;
                 });
