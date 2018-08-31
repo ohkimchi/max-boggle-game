@@ -7,8 +7,11 @@
     "@types/react": "^16.4.12",
     "immutability-helper": "^2.7.1",
     "react": "^16.4.2",
+    "react-alert": "^4.0.4",
+    "react-alert-template-basic": "^1.0.0",
     "react-dom": "^16.4.2",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "react-transition-group": "^2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
